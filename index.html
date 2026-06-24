@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>袜子产品数据展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 20px 28px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header h1 {
+            font-size: 20px;
+        }
+        .header h1 small {
+            font-size: 13px;
+            font-weight: 400;
+            opacity: 0.85;
+        }
+        .stats {
+            display: flex;
+            gap: 18px;
+            font-size: 13px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 16px;
+            border-radius: 30px;
+        }
+        .stats .num {
+            font-weight: 700;
+            font-size: 17px;
+        }
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 18px;
+            color: #666;
+        }
+        .loading .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #eee;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .filter-bar {
+            background: #fff;
+            padding: 14px 18px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            margin-bottom: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 16px;
+            align-items: center;
+        }
+        .filter-bar label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .filter-bar select,
+        .filter-bar input {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 12px;
+            background: #fafafa;
+            outline: none;
+        }
+        .filter-bar select:focus,
+        .filter-bar input:focus {
+            border-color: #667eea;
+            background: #fff;
+        }
+        .filter-bar .search-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: auto;
+        }
+        .filter-bar .search-box input {
+            width: 180px;
+        }
+        .table-wrapper {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            overflow: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            min-width: 1000px;
+        }
+        thead {
+            background: #f8f9fc;
+            border-bottom: 2px solid #eef0f4;
+        }
+        thead th {
+            padding: 11px 10px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #666;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+            background: #f8f9fc;
+            z-index: 5;
+        }
+        tbody tr {
+            border-bottom: 1px solid #f0f2f5;
+        }
+        tbody tr:hover {
+            background: #f8faff;
+        }
+        tbody td {
+            padding: 10px 10px;
+            vertical-align: middle;
+        }
+        .product-title {
+            max-width: 180px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 500;
+            cursor: help;
+        }
+        .variant-text {
+            font-size: 11px;
+            color: #888;
+            max-width: 90px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .price {
+            font-weight: 600;
+            color: #e74c3c;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+        .price-judge {
+            display: inline-block;
+            padding: 1px 10px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+        .price-judge.高价品 {
+            background: #fff3e0;
+            color: #e67e22;
+        }
+        .price-judge.中价品 {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+        .price-judge.低价品 {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        .price-judge.unknown {
+            background: #f0f0f0;
+            color: #999;
+        }
+        .l1-badge {
+            display: inline-block;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            background: #eef2f7;
+            color: #555;
+        }
+        .l2-badge {
+            display: inline-block;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            background: #f0f4ff;
+            color: #4a6cf7;
+        }
+        .link-btn {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            text-decoration: none;
+            background: #f0f4ff;
+            color: #4a6cf7;
+            white-space: nowrap;
+        }
+        .link-btn:hover {
+            background: #4a6cf7;
+            color: #fff;
+        }
+        .img-thumb {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #f0f2f5;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .img-thumb:hover {
+            transform: scale(2.5);
+            z-index: 10;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+        .img-thumb.error {
+            display: none;
+        }
+        .tag {
+            display: inline-block;
+            padding: 1px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            background: #f0f0f0;
+            color: #666;
+        }
+        .l3-tag {
+            background: #e8f0fe;
+            color: #1a73e8;
+        }
+        .empty-row td {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0 6px;
+            font-size: 13px;
+            flex-wrap: wrap;
+        }
+        .pagination button {
+            padding: 5px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+        .pagination button:hover:not(:disabled) {
+            background: #f0f4ff;
+            border-color: #4a6cf7;
+        }
+        .pagination button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        .pagination .page-info {
+            color: #666;
+        }
+        .pagination .page-info strong {
+            color: #333;
+        }
+        .footer {
+            text-align: center;
+            padding: 16px 0 6px;
+            font-size: 12px;
+            color: #aaa;
+        }
+        .error-msg {
+            text-align: center;
+            padding: 60px 20px;
+            color: #e74c3c;
+        }
+        .error-msg .icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 16px;
+        }
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .stats {
+                flex-wrap: wrap;
+                gap: 6px 14px;
+                font-size: 12px;
+            }
+            .filter-bar .search-box {
+                margin-left: 0;
+                width: 100%;
+            }
+            .filter-bar .search-box input {
+                width: 100%;
+            }
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            table {
+                font-size: 11px;
+                min-width: 800px;
+            }
+            thead th,
+            tbody td {
+                padding: 6px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧦 袜子产品数据 <small>Shopee 选品</small></h1>
+            <div class="stats">
+                <span>📦 产品 <span class="num" id="totalCount">-</span></span>
+                <span>🏷️ 款式 <span class="num" id="variantCount">-</span></span>
+                <span>💰 价格 <span class="num" id="priceRange">-</span></span>
+            </div>
+        </div>
+
+        <div class="filter-bar" id="filterBar" style="display:none;">
+            <label>L1 <select id="filterL1"><option value="all">全部</option></select></label>
+            <label>L2 <select id="filterL2"><option value="all">全部</option></select></label>
+            <label>价格 <select id="filterPriceJudge"><option value="all">全部</option><option value="高价品">高价品</option><option value="中价品">中价品</option><option value="低价品">低价品</option></select></label>
+            <label>L3 <select id="filterL3"><option value="all">全部</option></select></label>
+            <div class="search-box">🔍 <input type="text" id="searchInput" placeholder="搜索标题、款式..." /></div>
+        </div>
+
+        <div id="loadingArea" class="loading">
+            <div class="spinner"></div>
+            <div>正在加载数据...</div>
+        </div>
+
+        <div id="errorArea" class="error-msg" style="display:none;">
+            <span class="icon">❌</span>
+            <div id="errorText">加载失败</div>
+        </div>
+
+        <div class="table-wrapper" id="tableWrapper" style="display:none;">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:36px;">#</th>
+                        <th style="width:50px;">图</th>
+                        <th style="min-width:160px;">标题</th>
+                        <th style="min-width:80px;">款式</th>
+                        <th style="width:70px;">价格</th>
+                        <th style="width:80px;">定位</th>
+                        <th style="min-width:80px;">L1/L2</th>
+                        <th style="width:60px;">L3</th>
+                        <th style="width:60px;">链接</th>
+                        <th style="width:50px;">Model</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <div class="pagination" id="paginationArea" style="display:none;">
+            <button id="prevPage">◀ 上一页</button>
+            <span class="page-info">第 <strong id="currentPageDisplay">1</strong> / <span id="totalPagesDisplay">1</span> 页</span>
+            <button id="nextPage">下一页 ▶</button>
+            <span style="font-size:12px;color:#999;margin-left:10px;">
+                每页 <select id="pageSizeSelect" style="padding:3px 6px;border-radius:4px;border:1px solid #ddd;">
+                    <option value="20">20</option>
+                    <option value="50" selected>50</option>
+                    <option value="100">100</option>
+                </select>
+            </span>
+        </div>
+
+        <div class="footer" id="footerArea" style="display:none;">共 <span id="footerTotal">0</span> 条记录</div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  主逻辑：加载 CSV 文件并渲染表格
+        // ============================================================
+
+        let allData = [];
+        let filteredData = [];
+        let currentPage = 1;
+        let pageSize = 50;
+
+        // ---------- CSV 解析 ----------
+        function parseCSV(text) {
+            const lines = [];
+            let current = '';
+            let inQuotes = false;
+            for (let i = 0; i < text.length; i++) {
+                const ch = text[i];
+                if (ch === '"') {
+                    inQuotes = !inQuotes;
+                } else if (ch === '\n' && !inQuotes) {
+                    lines.push(current);
+                    current = '';
+                } else {
+                    current += ch;
+                }
+            }
+            if (current) lines.push(current);
+
+            const result = [];
+            const headerLine = lines[0] || '';
+            // 简单分割（忽略引号内的逗号）
+            const headers = headerLine.split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i];
+                if (!line.trim()) continue;
+                const values = [];
+                let val = '';
+                let inQ = false;
+                for (let j = 0; j < line.length; j++) {
+                    const ch = line[j];
+                    if (ch === '"') {
+                        inQ = !inQ;
+                    } else if (ch === ',' && !inQ) {
+                        values.push(val.trim());
+                        val = '';
+                    } else {
+                        val += ch;
+                    }
+                }
+                values.push(val.trim());
+
+                const obj = {};
+                headers.forEach((h, idx) => {
+                    let v = values[idx] || '';
+                    v = v.replace(/^"|"$/g, '');
+                    obj[h] = v;
+                });
+                result.push(obj);
+            }
+            return result;
+        }
+
+        // ---------- 加载数据 ----------
+        async function loadData() {
+            const loadingArea = document.getElementById('loadingArea');
+            const errorArea = document.getElementById('errorArea');
+            const errorText = document.getElementById('errorText');
+
+            try {
+                const response = await fetch('data-new.csv');
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                const csvText = await response.text();
+                allData = parseCSV(csvText);
+
+                if (allData.length === 0) {
+                    throw new Error('CSV 文件为空或解析失败');
+                }
+
+                // 隐藏加载，显示界面
+                loadingArea.style.display = 'none';
+                errorArea.style.display = 'none';
+                document.getElementById('filterBar').style.display = 'flex';
+                document.getElementById('tableWrapper').style.display = 'block';
+                document.getElementById('paginationArea').style.display = 'flex';
+                document.getElementById('footerArea').style.display = 'block';
+
+                renderFilters();
+                applyFilters();
+
+            } catch (e) {
+                loadingArea.style.display = 'none';
+                errorArea.style.display = 'block';
+                errorText.textContent = '加载 data-new.csv 失败：' + e.message + '。请确保文件在同目录下。';
+                console.error('加载失败:', e);
+            }
+        }
+
+        // ---------- 工具函数 ----------
+        function getUniqueValues(arr, key) {
+            const vals = arr.map(item => (item[key] || '').trim()).filter(v => v !== '');
+            return [...new Set(vals)].sort();
+        }
+
+        function safeStr(val) {
+            return (val || '').trim();
+        }
+
+        // ---------- 渲染筛选器 ----------
+        function renderFilters() {
+            const l1Set = getUniqueValues(allData, 'l1');
+            const l2Set = getUniqueValues(allData, 'l2');
+            const l3Set = getUniqueValues(allData, 'l3');
+
+            const l1Sel = document.getElementById('filterL1');
+            const l2Sel = document.getElementById('filterL2');
+            const l3Sel = document.getElementById('filterL3');
+
+            l1Sel.innerHTML = '<option value="all">全部</option>' + l1Set.map(v => `<option value="${v}">${v}</option>`).join('');
+            l2Sel.innerHTML = '<option value="all">全部</option>' + l2Set.map(v => `<option value="${v}">${v}</option>`).join('');
+            l3Sel.innerHTML = '<option value="all">全部</option>' + l3Set.map(v => `<option value="${v}">${v}</option>`).join('');
+        }
+
+        // ---------- 筛选数据 ----------
+        function applyFilters() {
+            const l1 = document.getElementById('filterL1').value;
+            const l2 = document.getElementById('filterL2').value;
+            const priceJudge = document.getElementById('filterPriceJudge').value;
+            const l3 = document.getElementById('filterL3').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+
+            filteredData = allData.filter(item => {
+                if (l1 !== 'all' && safeStr(item.l1) !== l1) return false;
+                if (l2 !== 'all' && safeStr(item.l2) !== l2) return false;
+                if (priceJudge !== 'all' && safeStr(item.priceJudge) !== priceJudge) return false;
+                if (l3 !== 'all' && safeStr(item.l3) !== l3) return false;
+                if (search) {
+                    const title = (item.title || '').toLowerCase();
+                    const variant = (item.variant || '').toLowerCase();
+                    if (!title.includes(search) && !variant.includes(search)) return false;
+                }
+                return true;
+            });
+
+            currentPage = 1;
+            updateStats();
+            renderTable();
+        }
+
+        // ---------- 更新统计 ----------
+        function updateStats() {
+            document.getElementById('totalCount').textContent = filteredData.length;
+            document.getElementById('variantCount').textContent = filteredData.length;
+
+            const prices = filteredData.map(d => parseFloat(d.price)).filter(p => !isNaN(p) && p > 0);
+            if (prices.length) {
+                const min = Math.min(...prices).toFixed(2);
+                const max = Math.max(...prices).toFixed(2);
+                document.getElementById('priceRange').textContent = `¥${min} ~ ¥${max}`;
+            } else {
+                document.getElementById('priceRange').textContent = '-';
+            }
+            document.getElementById('footerTotal').textContent = filteredData.length;
+        }
+
+        // ---------- 渲染表格 ----------
+        function renderTable() {
+            const start = (currentPage - 1) * pageSize;
+            const end = Math.min(start + pageSize, filteredData.length);
+            const pageData = filteredData.slice(start, end);
+            const tbody = document.getElementById('tableBody');
+
+            if (pageData.length === 0) {
+                tbody.innerHTML = '<tr class="empty-row"><td colspan="10">暂无数据</td></tr>';
+            } else {
+                tbody.innerHTML = pageData.map((item, idx) => {
+                    const globalIdx = start + idx + 1;
+                    const price = parseFloat(item.price);
+                    const priceDisplay = isNaN(price) ? item.price : price.toFixed(2);
+                    const judgeClass = safeStr(item.priceJudge) || 'unknown';
+                    const judgeLabel = judgeClass === 'unknown' ? '-' : judgeClass;
+                    const l3Display = safeStr(item.l3) || '-';
+                    const imgUrl = safeStr(item.imgUrl);
+                    const link = safeStr(item.link);
+                    const modelId = safeStr(item.modelId);
+
+                    return `<tr>
+                        <td>${globalIdx}</td>
+                        <td>${imgUrl ? `<img class="img-thumb" src="${imgUrl}" alt="" loading="lazy" onerror="this.classList.add('error')">` : '-'}</td>
+                        <td class="product-title" title="${safeStr(item.title)}">${safeStr(item.title) || '-'}</td>
+                        <td class="variant-text" title="${safeStr(item.variant)}">${safeStr(item.variant) || '-'}</td>
+                        <td class="price">${priceDisplay !== '-' ? '¥' + priceDisplay : '-'}</td>
+                        <td><span class="price-judge ${judgeClass}">${judgeLabel}</span></td>
+                        <td>
+                            <span class="l1-badge">${safeStr(item.l1) || '-'}</span>
+                            <br>
+                            <span class="l2-badge">${safeStr(item.l2) || '-'}</span>
+                        </td>
+                        <td>${l3Display !== '-' ? `<span class="tag l3-tag">${l3Display}</span>` : '-'}</td>
+                        <td>${link ? `<a class="link-btn" href="${link}" target="_blank">查看</a>` : '-'}</td>
+                        <td style="font-size:10px;color:#999;">${modelId || '-'}</td>
+                    </tr>`;
+                }).join('');
+            }
+
+            const totalPages = Math.ceil(filteredData.length / pageSize) || 1;
+            document.getElementById('currentPageDisplay').textContent = currentPage;
+            document.getElementById('totalPagesDisplay').textContent = totalPages;
+            document.getElementById('prevPage').disabled = currentPage <= 1;
+            document.getElementById('nextPage').disabled = currentPage >= totalPages;
+        }
+
+        // ---------- 事件绑定 ----------
+        document.getElementById('filterL1').addEventListener('change', applyFilters);
+        document.getElementById('filterL2').addEventListener('change', applyFilters);
+        document.getElementById('filterPriceJudge').addEventListener('change', applyFilters);
+        document.getElementById('filterL3').addEventListener('change', applyFilters);
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) { currentPage--;
+                renderTable(); }
+        });
+        document.getElementById('nextPage').addEventListener('click', () => {
+            const total = Math.ceil(filteredData.length / pageSize);
+            if (currentPage < total) { currentPage++;
+                renderTable(); }
+        });
+        document.getElementById('pageSizeSelect').addEventListener('change', function() {
+            pageSize = parseInt(this.value);
+            currentPage = 1;
+            renderTable();
+        });
+
+        // ---------- 启动 ----------
+        loadData();
+    </script>
+</body>
+</html>
