@@ -1,987 +1,684 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
     <title>6月热销 · 男女袜寻品清单</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
-            background: #f5f7fb;
-            color: #1a1a2e;
+            font-family: 'PingFang SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f4f4f7;
+            color: #333;
             padding: 20px;
         }
-        .container {
-            max-width: 1440px;
-            margin: 0 auto;
-        }
-
-        /* ===== 顶部横幅 ===== */
-        .banner {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        .container { max-width: 1440px; margin: 0 auto; }
+        header {
+            background: #ee4d2d;
+            color: white;
+            padding: 20px 24px;
             border-radius: 16px;
-            padding: 24px 32px;
             margin-bottom: 20px;
-            color: #fff;
-            position: relative;
-            overflow: hidden;
         }
-        .banner::after {
-            content: "🧦";
-            position: absolute;
-            right: 28px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 64px;
-            opacity: 0.12;
-        }
-        .banner h1 {
-            font-size: 24px;
-            font-weight: 700;
-        }
-        .banner .sub {
+        header h1 { font-size: 22px; }
+        .desc-box {
+            background: rgba(255,255,255,0.15);
+            padding: 12px 16px;
+            border-radius: 10px;
             font-size: 13px;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 6px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px 20px;
+            margin-top: 8px;
+            line-height: 1.6;
         }
-        .banner .sub .highlight {
-            background: rgba(255, 215, 0, 0.18);
-            padding: 2px 12px;
-            border-radius: 16px;
-            color: #ffd700;
-            font-size: 12px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
-        }
-        .banner .sub .tip {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 2px 12px;
-            border-radius: 16px;
-            font-size: 12px;
-        }
-
-        /* ===== 统计栏 ===== */
-        .stats-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px 28px;
-            background: #fff;
-            padding: 12px 22px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            margin-bottom: 18px;
-            align-items: center;
-        }
-        .stats-bar .stat-item {
-            font-size: 14px;
-            color: #555;
-            display: flex;
-            align-items: baseline;
-            gap: 4px;
-        }
-        .stats-bar .stat-item .num {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1a1a2e;
-        }
-        .stats-bar .stat-item .num.accent {
-            color: #e74c3c;
-        }
-        .stats-bar .divider {
-            width: 1px;
-            height: 24px;
-            background: #e0e4ea;
-        }
-
-        /* ===== 筛选栏 ===== */
-        .filter-bar {
-            background: #fff;
+        .filter-section {
+            background: white;
             padding: 14px 18px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            margin-bottom: 18px;
+            border-radius: 16px;
+            margin-bottom: 20px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 10px 14px;
-            align-items: center;
-        }
-        .filter-bar .filter-group {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 12px;
-            color: #888;
-        }
-        .filter-bar .filter-group label {
-            font-weight: 500;
-            white-space: nowrap;
-        }
-        .filter-bar select,
-        .filter-bar input {
-            padding: 5px 10px;
-            border: 1px solid #dce0e6;
-            border-radius: 6px;
-            font-size: 12px;
-            background: #fafbfc;
-            outline: none;
-            transition: 0.2s;
-        }
-        .filter-bar select:focus,
-        .filter-bar input:focus {
-            border-color: #4a6cf7;
-            background: #fff;
-            box-shadow: 0 0 0 3px rgba(74, 108, 247, 0.08);
-        }
-        .filter-bar .search-box {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            margin-left: auto;
-            flex: 1;
-            min-width: 140px;
-            max-width: 260px;
-        }
-        .filter-bar .search-box input {
-            flex: 1;
-            min-width: 80px;
-        }
-        .filter-bar .price-range input {
-            width: 70px;
-        }
-        .filter-bar .price-range span {
-            color: #bbb;
-            font-size: 12px;
-        }
-
-        /* ===== 工具栏 ===== */
-        .toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             flex-wrap: wrap;
             gap: 10px;
-            margin-bottom: 14px;
-        }
-        .toolbar .left {
-            display: flex;
             align-items: center;
-            gap: 12px;
+            border: 1px solid #eee;
+        }
+        .filter-section input, .filter-section select {
+            padding: 8px 14px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
             font-size: 13px;
-            color: #666;
+            background: #fafafa;
+            min-width: 120px;
         }
-        .toolbar .left select {
-            padding: 4px 10px;
-            border: 1px solid #dce0e6;
-            border-radius: 6px;
-            font-size: 12px;
-            background: #fff;
+        .filter-section input:focus, .filter-section select:focus {
+            outline: none;
+            border-color: #ee4d2d;
         }
-        .toolbar .view-toggle {
-            display: flex;
-            gap: 3px;
-            background: #f0f2f5;
-            border-radius: 8px;
-            padding: 3px;
+        .filter-section .search-box { min-width: 160px; flex: 1; }
+        #countDisplay {
+            background: #fff0ed;
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #ee4d2d;
+            font-size: 14px;
+            margin-left: auto;
+            white-space: nowrap;
         }
-        .toolbar .view-toggle button {
-            padding: 4px 14px;
-            border: none;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            background: transparent;
-            color: #888;
-            transition: 0.2s;
-        }
-        .toolbar .view-toggle button.active {
-            background: #fff;
-            color: #1a1a2e;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-        }
-        .toolbar .view-toggle button:hover:not(.active) {
-            color: #333;
-        }
-
-        /* ===== 商品网格 ===== */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 16px;
-            margin-bottom: 20px;
         }
-        .product-grid.list-view {
-            grid-template-columns: 1fr;
-        }
-
-        /* ===== 商品卡片 ===== */
-        .product-card {
-            background: #fff;
-            border-radius: 14px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        .card {
+            background: white;
+            border-radius: 16px;
             overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .product-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 28px rgba(0, 0, 0, 0.08);
-        }
-        .product-card .card-top {
-            display: flex;
-            gap: 14px;
-            padding: 14px 16px 10px;
-        }
-        .product-card .card-img-wrap {
-            flex-shrink: 0;
-            width: 90px;
-            height: 90px;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #f0f2f5;
+            border: 1px solid #eee;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.15s;
         }
-        .product-card .card-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .product-card .card-img-wrap .more-imgs {
+        .card:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
+        .judge-tag {
             position: absolute;
-            bottom: 2px;
-            right: 2px;
-            background: rgba(0, 0, 0, 0.6);
-            color: #fff;
-            font-size: 10px;
-            padding: 1px 6px;
-            border-radius: 8px;
+            top: 10px;
+            left: 10px;
+            padding: 3px 12px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 5;
+            color: white;
         }
-        .product-card .card-info {
-            flex: 1;
-            min-width: 0;
+        .judge-tag.high { background: #e67e22; }
+        .judge-tag.mid { background: #2b7a4b; }
+        .judge-tag.low { background: #1a5c7e; }
+        .img-container {
+            width: 100%;
+            height: 180px;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: zoom-in;
+            border-bottom: 1px solid #f0f0f0;
         }
-        .product-card .card-title {
+        .img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .info { padding: 14px 16px; flex: 1; }
+        .title {
+            font-weight: 600;
             font-size: 14px;
-            font-weight: 500;
             line-height: 1.4;
             display: -webkit-box;
             -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
             overflow: hidden;
-            color: #1a1a2e;
+            min-height: 40px;
         }
-        .product-card .card-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px 8px;
-            margin-top: 4px;
-            font-size: 11px;
-            color: #999;
+        .price-range {
+            color: #ee4d2d;
+            font-size: 18px;
+            font-weight: 700;
+            margin: 6px 0 10px;
         }
-        .product-card .card-meta .itemid {
-            color: #bbb;
-        }
-        .product-card .card-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            margin-top: 4px;
-        }
-        .product-card .card-tags .tag {
-            font-size: 10px;
-            padding: 1px 8px;
-            border-radius: 10px;
-            background: #f0f4ff;
-            color: #4a6cf7;
-        }
-        .product-card .card-tags .tag.l2 {
-            background: #f5f0ff;
-            color: #8b5cf6;
-        }
-        .product-card .card-tags .tag.l3 {
-            background: #f0faf5;
-            color: #27ae60;
-        }
-
-        /* ===== 价格定位标签 ===== */
-        .price-judge {
-            display: inline-block;
-            padding: 1px 10px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 600;
-        }
-        .price-judge.高价品 {
-            background: #fff3e0;
-            color: #e67e22;
-        }
-        .price-judge.中价品 {
-            background: #e8f5e9;
-            color: #388e3c;
-        }
-        .price-judge.低价品 {
-            background: #e3f2fd;
-            color: #1976d2;
-        }
-        .price-judge.unknown {
-            background: #f0f0f0;
-            color: #999;
-        }
-
-        /* ===== 款式列表 ===== */
-        .variant-list {
-            padding: 0 16px 12px;
-        }
-        .variant-list .variant-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 6px 10px;
-            border-radius: 8px;
+        .price-range small { font-size: 12px; font-weight: 400; color: #999; }
+        .variants-box {
             background: #f8f9fc;
-            margin-bottom: 4px;
-            transition: background 0.15s;
-            cursor: default;
-            flex-wrap: wrap;
-            gap: 4px 8px;
+            border-radius: 12px;
+            padding: 8px 10px;
+            max-height: 140px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            font-size: 12px;
         }
-        .variant-list .variant-item:hover {
-            background: #f0f4ff;
-        }
-        .variant-list .variant-item .v-name {
-            font-size: 13px;
-            color: #333;
-            flex: 1;
-            min-width: 80px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .variant-list .variant-item .v-price {
-            font-weight: 600;
-            color: #e74c3c;
-            font-size: 14px;
-            white-space: nowrap;
-        }
-        .variant-list .variant-item .v-model {
-            font-size: 10px;
-            color: #bbb;
-            font-family: monospace;
-            white-space: nowrap;
-        }
-        .variant-list .variant-item .v-img {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            object-fit: cover;
-            background: #eee;
-            flex-shrink: 0;
-            cursor: pointer;
-        }
-        .variant-list .variant-item .v-img:hover {
-            transform: scale(2);
-            z-index: 5;
-            position: relative;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        /* ===== 卡片底部 ===== */
-        .card-footer {
+        .variants-box::-webkit-scrollbar { width: 4px; }
+        .variants-box::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
+        .variant-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 8px 16px 14px;
-            flex-wrap: wrap;
-            gap: 6px 10px;
-            border-top: 1px solid #f0f2f5;
+            padding: 4px 4px;
+            border-bottom: 1px dashed #eee;
+            font-size: 12px;
         }
-        .card-footer .left {
+        .variant-item:last-child { border-bottom: none; }
+        .variant-item .v-price { color: #ee4d2d; font-weight: 600; }
+        .invite-row {
             display: flex;
             align-items: center;
             gap: 8px;
+            margin: 12px 0 6px;
+        }
+        .model-count-tag {
+            background: #fff1f0;
+            border: 1px solid #ffbcb3;
+            color: #c02b1a;
             font-size: 11px;
-            color: #999;
-            flex-wrap: wrap;
-        }
-        .card-footer .left .update-date {
-            color: #bbb;
-        }
-        .card-footer .left .model-count {
-            background: #f0f2f5;
-            padding: 0 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            color: #666;
-        }
-        .invite-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 12px;
-            border: 1px dashed #4a6cf7;
-            border-radius: 16px;
-            font-size: 11px;
-            color: #4a6cf7;
-            background: rgba(74, 108, 247, 0.06);
-            cursor: pointer;
-            transition: 0.2s;
-            font-family: monospace;
-            font-weight: 500;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 30px;
             white-space: nowrap;
         }
-        .invite-btn:hover {
-            background: #4a6cf7;
-            color: #fff;
-            border-style: solid;
+        .invite-id-box {
+            flex: 1;
+            background: #fff8f6;
+            border: 2px dashed #ee4d2d;
+            padding: 5px 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ee4d2d;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: monospace;
         }
-        .invite-btn.copied {
-            border-color: #27ae60;
-            color: #27ae60;
-            background: rgba(39, 174, 96, 0.1);
-        }
-        .invite-btn .badge {
-            font-size: 9px;
-            background: rgba(74, 108, 247, 0.15);
-            padding: 0 6px;
-            border-radius: 4px;
-            font-family: -apple-system, sans-serif;
-        }
-        .invite-btn:hover .badge {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        .link-1688 {
+        .invite-id-box:hover { background: #ee4d2d; color: white; border-style: solid; }
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 11px;
-            color: #4a6cf7;
+            color: #999;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 10px;
+            margin-top: 6px;
+        }
+        .footer-row a {
+            color: #0066cc;
             text-decoration: none;
-            padding: 2px 8px;
-            border-radius: 4px;
-            background: #f0f4ff;
+            font-weight: 600;
+            font-size: 11px;
+            background: #f0f7ff;
+            padding: 2px 10px;
+            border-radius: 20px;
+            margin-left: 4px;
         }
-        .link-1688:hover {
-            background: #4a6cf7;
-            color: #fff;
+        .footer-row a:hover { background: #0066cc; color: white; }
+        .expand-btn {
+            background: none;
+            border: 1px dashed #ccc;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 11px;
+            cursor: pointer;
+            color: #888;
+            margin-top: 8px;
         }
-
-        /* ===== 分页 ===== */
-        .pagination {
+        .expand-btn:hover { border-color: #ee4d2d; color: #ee4d2d; }
+        .model-images {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        .model-images.show { display: grid; }
+        .model-img-item { text-align: center; }
+        .model-img-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+            cursor: zoom-in;
+            border: 1px solid #eee;
+        }
+        .model-img-item .model-price { font-size: 10px; color: #ee4d2d; font-weight: 600; }
+        #imageModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+        #imageModal img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+        #pagination {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
-            padding: 12px 0 6px;
+            gap: 8px;
+            margin: 20px 0 10px;
             flex-wrap: wrap;
         }
-        .pagination button {
-            padding: 5px 14px;
-            border: 1px solid #dce0e6;
-            border-radius: 6px;
-            background: #fff;
+        #pagination button {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 6px 16px;
             cursor: pointer;
-            font-size: 12px;
-            transition: 0.2s;
-        }
-        .pagination button:hover:not(:disabled) {
-            background: #f0f4ff;
-            border-color: #4a6cf7;
-        }
-        .pagination button:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-        .pagination .page-info {
             font-size: 13px;
-            color: #666;
         }
-        .pagination .page-size-select {
-            padding: 4px 8px;
-            border: 1px solid #dce0e6;
-            border-radius: 6px;
-            font-size: 12px;
-            background: #fff;
-            margin-left: 6px;
-        }
-
-        /* ===== 加载 & 空状态 ===== */
-        .loading {
+        #pagination button:hover:not(:disabled) { background: #ee4d2d; color: white; border-color: #ee4d2d; }
+        #pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+        #pagination .page-info { font-size: 13px; color: #666; }
+        #pagination input[type="number"] {
+            width: 60px;
+            padding: 6px 8px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
             text-align: center;
-            padding: 60px 20px;
-            color: #666;
+            font-size: 13px;
         }
-        .loading .spinner {
-            display: inline-block;
-            width: 36px;
-            height: 36px;
-            border: 4px solid #eee;
-            border-top-color: #4a6cf7;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 12px;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: #999;
-        }
-        .empty-state .icon {
-            font-size: 48px;
-            display: block;
-            margin-bottom: 12px;
-        }
-        .error-msg {
-            text-align: center;
-            padding: 60px 20px;
-            color: #e74c3c;
-        }
-        .error-msg .icon {
-            font-size: 48px;
-            display: block;
-            margin-bottom: 12px;
-        }
-
-        /* ===== Toast ===== */
         .toast {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(80px);
             background: #1a1a2e;
-            color: #fff;
+            color: white;
             padding: 10px 24px;
-            border-radius: 10px;
-            font-size: 13px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+            border-radius: 12px;
+            font-size: 14px;
             opacity: 0;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.4s;
             z-index: 999;
             pointer-events: none;
         }
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* ===== 响应式 ===== */
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
         @media (max-width: 768px) {
-            body {
-                padding: 12px;
-            }
-            .banner {
-                padding: 18px 16px;
-            }
-            .banner h1 {
-                font-size: 18px;
-            }
-            .banner::after {
-                font-size: 40px;
-                right: 12px;
-            }
-            .banner .sub {
-                font-size: 12px;
-                flex-direction: column;
-                gap: 6px;
-            }
-            .stats-bar {
-                padding: 10px 14px;
-                gap: 8px 16px;
-                font-size: 13px;
-            }
-            .stats-bar .stat-item .num {
-                font-size: 17px;
-            }
-            .filter-bar {
-                padding: 10px 12px;
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .filter-bar .filter-group {
-                flex-wrap: wrap;
-            }
-            .filter-bar .search-box {
-                margin-left: 0;
-                max-width: 100%;
-            }
-            .filter-bar .price-range input {
-                width: 60px;
-            }
-            .toolbar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 6px;
-            }
-            .product-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            .product-card .card-top {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            .product-card .card-img-wrap {
-                width: 120px;
-                height: 120px;
-            }
-            .product-card .card-title {
-                font-size: 13px;
-                -webkit-line-clamp: 3;
-            }
-            .variant-list .variant-item {
-                font-size: 12px;
-                padding: 5px 8px;
-            }
-            .card-footer {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 6px;
-            }
-            .card-footer .left {
-                justify-content: center;
-            }
-            .invite-btn {
-                justify-content: center;
-            }
-            .pagination {
-                gap: 6px;
-            }
-            .pagination button {
-                padding: 4px 10px;
-                font-size: 11px;
-            }
+            .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .filter-section { flex-direction: column; align-items: stretch; }
+            .filter-section .search-box { min-width: auto; }
+            #countDisplay { margin-left: 0; text-align: center; }
+            header h1 { font-size: 18px; }
+            .desc-box { font-size: 12px; }
+            .img-container { height: 140px; }
+            .title { font-size: 13px; }
+            .price-range { font-size: 16px; }
         }
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            }
+        @media (max-width: 480px) {
+            .product-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-
-        <!-- ===== 顶部横幅 ===== -->
-        <div class="banner">
-            <h1>🧦 6月热销 · 男女袜寻品清单</h1>
-            <div class="sub">
-                <span>📋 单击 <span class="highlight">红色虚线框</span> 复制邀请 ID，一次报满该商品下所有规格</span>
-                <span class="tip">📌 提报路径：SCS 卖家后台 → 商品管理 → 机会商品 → 输入邀请 ID → 立刻报名</span>
-                <span class="tip">💰 点击 1688 标签查看核价参考，联系买手申诉</span>
-            </div>
+<div class="container">
+    <header>
+        <h1>🔥 6月热销 · 男女袜寻品清单</h1>
+        <div class="desc-box">
+            💰 <strong>高效提报</strong>：单击红色虚线框复制邀请ID，一次报满该商品下所有规格。鼓励拓色拓码提报！<br>
+            📌 提报路径：SCS卖家后台 → 商品管理 → 机会商品 → 输入邀请ID → 立刻报名<br>
+            💹 价格问题：点击1688标签查看核价参考，联系买手申诉。
         </div>
+    </header>
 
-        <!-- ===== 统计栏 ===== -->
-        <div class="stats-bar" id="statsBar">
-            <div class="stat-item">📦 共 <span class="num accent" id="totalCount">-</span> 个商品</div>
-            <div class="divider"></div>
-            <div class="stat-item">💰 均价 <span class="num" id="avgPrice">-</span></div>
-            <div class="divider"></div>
-            <div class="stat-item">
-                📊 <span class="num" id="highCount" style="color:#e67e22;">-</span> 高价品
-                <span style="color:#ccc;margin:0 4px;">|</span>
-                <span class="num" id="midCount" style="color:#388e3c;">-</span> 中价品
-                <span style="color:#ccc;margin:0 4px;">|</span>
-                <span class="num" id="lowCount" style="color:#1976d2;">-</span> 低价品
-            </div>
-            <div class="divider"></div>
-            <div class="stat-item">📐 <span class="num" id="variantTotal">-</span> 个款式</div>
-        </div>
-
-        <!-- ===== 筛选栏 ===== -->
-        <div class="filter-bar" id="filterBar">
-            <div class="filter-group search-box">
-                <label>🔍</label>
-                <input type="text" id="searchInput" placeholder="搜索标题 / ID..." />
-            </div>
-            <div class="filter-group">
-                <label>一级</label>
-                <select id="filterL1"><option value="all">全部</option></select>
-            </div>
-            <div class="filter-group">
-                <label>二级</label>
-                <select id="filterL2"><option value="all">全部</option></select>
-            </div>
-            <div class="filter-group">
-                <label>三级</label>
-                <select id="filterL3"><option value="all">全部</option></select>
-            </div>
-            <div class="filter-group">
-                <label>定位</label>
-                <select id="filterPriceJudge">
-                    <option value="all">全部</option>
-                    <option value="高价品">高价品</option>
-                    <option value="中价品">中价品</option>
-                    <option value="低价品">低价品</option>
-                </select>
-            </div>
-            <div class="filter-group price-range">
-                <label>¥</label>
-                <input type="number" id="priceMin" placeholder="最低" min="0" step="0.01" />
-                <span>~</span>
-                <input type="number" id="priceMax" placeholder="最高" min="0" step="0.01" />
-            </div>
-            <div class="filter-group">
-                <label>日期</label>
-                <select id="filterDate">
-                    <option value="all">全部</option>
-                    <option value="6-23发布">6月23日</option>
-                    <option value="6-22发布">6月22日</option>
-                    <option value="6-21发布">6月21日</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- ===== 工具栏 ===== -->
-        <div class="toolbar">
-            <div class="left">
-                <span id="resultCount">共 0 个商品</span>
-                <select id="sortSelect">
-                    <option value="default">默认排序</option>
-                    <option value="price-asc">价格 ↑</option>
-                    <option value="price-desc">价格 ↓</option>
-                </select>
-            </div>
-            <div class="view-toggle">
-                <button class="active" data-view="grid" id="viewGrid">🟦 网格</button>
-                <button data-view="list" id="viewList">📋 列表</button>
-            </div>
-        </div>
-
-        <!-- ===== 加载 / 错误 ===== -->
-        <div id="loadingArea" class="loading">
-            <div class="spinner"></div>
-            <div>正在加载数据...</div>
-        </div>
-        <div id="errorArea" class="error-msg" style="display:none;">
-            <span class="icon">❌</span>
-            <div id="errorText">加载失败，请检查 data-new.csv 是否存在</div>
-        </div>
-
-        <!-- ===== 商品列表 ===== -->
-        <div class="product-grid" id="productGrid"></div>
-
-        <!-- ===== 分页 ===== -->
-        <div class="pagination" id="paginationArea">
-            <button id="prevPage">◀ 上一页</button>
-            <span class="page-info">第 <strong id="currentPageDisplay">1</strong> / <span id="totalPagesDisplay">1</span> 页</span>
-            <button id="nextPage">下一页 ▶</button>
-            <select class="page-size-select" id="pageSizeSelect">
-                <option value="12">12</option>
-                <option value="24">24</option>
-                <option value="48" selected>48</option>
-                <option value="96">96</option>
-            </select>
-        </div>
-
-        <!-- ===== Toast ===== -->
-        <div class="toast" id="toast"></div>
+    <!-- ===== 筛选栏 ===== -->
+    <div class="filter-section">
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜索标题 / ID..." oninput="debouncedFilter()">
+        <select id="l1Filter" onchange="updateL2(); updateL3(); applyFilters()"><option value="">一级类目(全部)</option></select>
+        <select id="l2Filter" onchange="updateL3(); applyFilters()"><option value="">二级类目(全部)</option></select>
+        <select id="l3Filter" onchange="applyFilters()"><option value="">三级类目(全部)</option></select>
+        
+        <!-- ===== 价格定位筛选器（高价品/中价品/低价品） ===== -->
+        <select id="priceJudgeFilter" onchange="applyFilters()">
+            <option value="">💰 价格定位(全部)</option>
+            <option value="高价品">🔥 高价品</option>
+            <option value="中价品">💚 中价品</option>
+            <option value="低价品">💙 低价品</option>
+        </select>
+        
+        <select id="dateFilter" onchange="applyFilters()"><option value="">发布日期(全部)</option></select>
+        <input type="number" id="minPrice" placeholder="¥ 最低价" step="0.01" oninput="debouncedFilter()">
+        <input type="number" id="maxPrice" placeholder="¥ 最高价" step="0.01" oninput="debouncedFilter()">
+        <select id="sortOrder" onchange="applyFilters()">
+            <option value="default">📌 默认排序</option>
+            <option value="priceAsc">💹 价格升序</option>
+            <option value="priceDesc">💹 价格降序</option>
+        </select>
+        <span id="countDisplay">加载中...</span>
     </div>
 
-    <script>
-        // ============================================================
-        //  1. 加载 CSV
-        // ============================================================
+    <div class="product-grid" id="productGrid"></div>
+    <div id="pagination"></div>
+</div>
 
-        let allData = [];
-        let groupedData = [];
-        let filteredData = [];
-        let currentPage = 1;
-        let pageSize = 48;
-        let currentView = 'grid';
+<div id="imageModal" onclick="this.style.display='none'"><img id="modalImg" src=""></div>
+<div class="toast" id="toast"></div>
 
-        function parseCSV(text) {
-            const lines = [];
-            let current = '';
-            let inQuotes = false;
-            for (let i = 0; i < text.length; i++) {
-                const ch = text[i];
-                if (ch === '"') inQuotes = !inQuotes;
-                else if (ch === '\n' && !inQuotes) { lines.push(current);
-                    current = ''; } else current += ch;
+<script>
+    // ============================================================
+    //  核心数据
+    // ============================================================
+
+    let products = [];
+    let groupedProducts = [];
+    let filteredGroup = [];
+    let currentPage = 1;
+    const pageSize = 40;
+
+    // ============================================================
+    //  工具函数
+    // ============================================================
+
+    const safeGet = (arr, idx, def = '') => (arr && arr.length > idx && arr[idx] != null) ? String(arr[idx]) : def;
+    const cleanId = (str) => str ? str.toString().replace(/^['"+]+|["=\t]/g, '').trim() : '';
+
+    const parseRow = (arr) => ({
+        title: safeGet(arr, 0),
+        variant: safeGet(arr, 1),
+        price: parseFloat(safeGet(arr, 2)) || 0,
+        imgUrl: safeGet(arr, 3),
+        link: safeGet(arr, 4),
+        l1: safeGet(arr, 5).trim(),
+        l2: safeGet(arr, 6).trim(),
+        l3: safeGet(arr, 16).trim(),
+        inviteId: cleanId(safeGet(arr, 7)),
+        modelId: cleanId(safeGet(arr, 8)),
+        link1688: safeGet(arr, 9),
+        judgeText: safeGet(arr, 10).trim(),
+        date: safeGet(arr, 11).trim(),
+        itemid: cleanId(safeGet(arr, 12)) || `temp_${Math.random()}`,
+    });
+
+    // ============================================================
+    //  按 itemid 分组
+    // ============================================================
+
+    function groupByItemid(rows) {
+        const map = new Map();
+        rows.forEach(row => {
+            const p = parseRow(row);
+            const id = p.itemid;
+            if (!map.has(id)) {
+                map.set(id, {
+                    itemid: id,
+                    title: p.title,
+                    imgUrl: p.imgUrl,
+                    link: p.link,
+                    l1: p.l1,
+                    l2: p.l2,
+                    l3: p.l3,
+                    inviteId: p.inviteId,
+                    link1688: p.link1688,
+                    date: p.date,
+                    priceJudge: p.judgeText || '中价品',
+                    variants: []
+                });
             }
-            if (current) lines.push(current);
+            const g = map.get(id);
+            if (!g.imgUrl && p.imgUrl) g.imgUrl = p.imgUrl;
+            if (!g.link && p.link) g.link = p.link;
+            if (!g.link1688 && p.link1688) g.link1688 = p.link1688;
+            if (!g.l3 && p.l3) g.l3 = p.l3;
+            if (p.judgeText && !g.priceJudge) g.priceJudge = p.judgeText;
+            // 去重添加 variant
+            const key = p.modelId || p.variant;
+            if (!g.variants.some(v => (v.modelId || v.variant) === key)) {
+                g.variants.push({
+                    variant: p.variant || '默认',
+                    price: p.price,
+                    modelId: p.modelId,
+                    imgUrl: p.imgUrl,
+                });
+            }
+        });
 
-            const result = [];
-            const headerLine = lines[0] || '';
-            const headers = headerLine.split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+        const result = [];
+        for (let g of map.values()) {
+            const prices = g.variants.map(v => v.price).filter(p => p > 0);
+            g.minPrice = prices.length ? Math.min(...prices) : 0;
+            g.maxPrice = prices.length ? Math.max(...prices) : 0;
+            g.modelCount = g.variants.length;
+            g.variants.sort((a, b) => a.price - b.price);
+            
+            // 价格定位
+            const j = g.priceJudge || '';
+            if (j.includes('高价品')) { g.judgeDisplay = '高价品'; g.judgeClass = 'high'; }
+            else if (j.includes('低价品')) { g.judgeDisplay = '低价品'; g.judgeClass = 'low'; }
+            else { g.judgeDisplay = '中价品'; g.judgeClass = 'mid'; }
+            result.push(g);
+        }
+        return result;
+    }
 
+    // ============================================================
+    //  加载 CSV
+    // ============================================================
+
+    async function loadData() {
+        try {
+            const res = await fetch('data-new.csv');
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const text = await res.text();
+            const lines = text.split(/\r?\n/).filter(l => l.trim());
+
+            const rawRows = [];
             for (let i = 1; i < lines.length; i++) {
                 const line = lines[i];
-                if (!line.trim()) continue;
-                const values = [];
-                let val = '',
-                    inQ = false;
-                for (let j = 0; j < line.length; j++) {
-                    const ch = line[j];
-                    if (ch === '"') inQ = !inQ;
-                    else if (ch === ',' && !inQ) { values.push(val.trim());
-                        val = ''; } else val += ch;
+                if (line.replace(/,/g, '').trim() === '') continue;
+                let row = [], cur = '', inQ = false;
+                for (let c of line) {
+                    if (c === '"') inQ = !inQ;
+                    else if (c === ',' && !inQ) { row.push(cur.trim()); cur = ''; }
+                    else cur += c;
                 }
-                values.push(val.trim());
-                const obj = {};
-                headers.forEach((h, idx) => {
-                    let v = values[idx] || '';
-                    v = v.replace(/^"|"$/g, '');
-                    obj[h] = v;
-                });
-                result.push(obj);
+                row.push(cur.trim());
+                if (!row[0] && !row[7]) continue;
+                rawRows.push(row);
             }
-            return result;
+
+            if (rawRows.length === 0) throw new Error('无有效数据');
+            products = rawRows;
+            groupedProducts = groupByItemid(products);
+            console.log(`✅ 分组后 ${groupedProducts.length} 个商品`);
+
+            initFilters();
+            applyFilters();
+        } catch (e) {
+            document.getElementById('countDisplay').textContent = '❌ 加载失败';
+            document.getElementById('productGrid').innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:50px;">加载失败：${e.message}</div>`;
+            console.error(e);
+        }
+    }
+
+    // ============================================================
+    //  筛选 & 渲染
+    // ============================================================
+
+    function applyFilters() {
+        const q = document.getElementById('searchInput').value.toLowerCase().trim();
+        const l1 = document.getElementById('l1Filter').value;
+        const l2 = document.getElementById('l2Filter').value;
+        const l3 = document.getElementById('l3Filter').value;
+        const priceJudge = document.getElementById('priceJudgeFilter').value;
+        const date = document.getElementById('dateFilter').value;
+        const min = parseFloat(document.getElementById('minPrice').value) || 0;
+        const max = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+
+        filteredGroup = groupedProducts.filter(g => {
+            if (q && !g.title.toLowerCase().includes(q) && !g.inviteId.toLowerCase().includes(q)) return false;
+            if (l1 && g.l1 !== l1) return false;
+            if (l2 && g.l2 !== l2) return false;
+            if (l3 && g.l3 !== l3) return false;
+            if (priceJudge && g.judgeDisplay !== priceJudge) return false;
+            if (date && g.date !== date) return false;
+            if (g.maxPrice < min || g.minPrice > max) return false;
+            return true;
+        });
+
+        const sort = document.getElementById('sortOrder').value;
+        if (sort === 'priceAsc') filteredGroup.sort((a, b) => a.minPrice - b.minPrice);
+        else if (sort === 'priceDesc') filteredGroup.sort((a, b) => b.maxPrice - a.maxPrice);
+
+        document.getElementById('countDisplay').textContent = `📦 共 ${filteredGroup.length} 个商品`;
+        renderPage(1);
+    }
+
+    function renderPage(page) {
+        currentPage = page;
+        const grid = document.getElementById('productGrid');
+        const start = (page - 1) * pageSize;
+        const end = Math.min(start + pageSize, filteredGroup.length);
+        const pageItems = filteredGroup.slice(start, end);
+
+        if (!pageItems.length) {
+            grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:50px;">暂无匹配的商品</div>`;
+            document.getElementById('pagination').innerHTML = '';
+            return;
         }
 
-        async function loadData() {
-            const loading = document.getElementById('loadingArea');
-            const error = document.getElementById('errorArea');
-            const errorText = document.getElementById('errorText');
+        grid.innerHTML = pageItems.map(g => {
+            const priceText = g.minPrice === g.maxPrice ? `¥${g.minPrice.toFixed(2)}` : `¥${g.minPrice.toFixed(2)} - ¥${g.maxPrice.toFixed(2)}`;
+            const emoji = g.judgeClass === 'high' ? '🔥' : g.judgeClass === 'low' ? '💙' : '💚';
+            const label = `${emoji} ${g.judgeDisplay}`;
 
-            try {
-                const response = await fetch('data-new.csv');
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                const csvText = await response.text();
-                allData = parseCSV(csvText);
-                if (allData.length === 0) throw new Error('CSV 为空');
+            let variantsHtml = g.variants.slice(0, 10).map(v =>
+                `<div class="variant-item"><span>${v.variant}</span><span class="v-price">¥${v.price.toFixed(2)}</span></div>`
+            ).join('');
+            if (g.variants.length > 10) variantsHtml += `<div class="variant-item" style="justify-content:center;color:#999;">+${g.variants.length - 10} 个规格</div>`;
 
-                // 按 itemid 分组
-                groupByItem();
+            let imagesHtml = g.variants.map(v =>
+                `<div class="model-img-item">
+                    <img src="${v.imgUrl || g.imgUrl}" onclick="showImage('${v.imgUrl || g.imgUrl}')" onerror="this.style.display='none'">
+                    <div class="model-price">¥${v.price.toFixed(2)}</div>
+                </div>`
+            ).join('');
 
-                loading.style.display = 'none';
-                error.style.display = 'none';
-                renderFilters();
-                applyFilters();
+            return `
+            <div class="card">
+                <div class="judge-tag ${g.judgeClass}" onclick="checkLink('${(g.link1688 || '').replace(/'/g, "\\'")}')">${label}</div>
+                <div class="img-container" onclick="showImage('${g.imgUrl}')">
+                    <img src="${g.imgUrl}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22%3E%3Crect fill=%22%23f0f0f0%22 width=%22200%22 height=%22200%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23ccc%22 font-size=%2214%22 font-family=%22sans-serif%22%3E无图%3C/text%3E%3C/svg%3E'">
+                </div>
+                <div class="info">
+                    <div class="title" title="${g.title.replace(/"/g, '&quot;')}">${g.title}</div>
+                    <div class="price-range">${priceText} <small>起</small></div>
+                    <div class="variants-box">${variantsHtml}</div>
+                    <button class="expand-btn" onclick="this.nextElementSibling.classList.toggle('show'); this.textContent = this.nextElementSibling.classList.contains('show')?'收起图片':'📷 展开图片'">📷 展开图片</button>
+                    <div class="model-images">${imagesHtml}</div>
+                    <div class="invite-row">
+                        <span class="model-count-tag">${g.modelCount}款</span>
+                        <div class="invite-id-box" onclick="copyInvite('${g.inviteId || ''}')">${g.inviteId || '--'}</div>
+                    </div>
+                    <div class="footer-row">
+                        <span>${g.date || ''}</span>
+                        <span style="font-weight:600;font-size:11px;color:#bbb;">${g.itemid}</span>
+                        <div>
+                            <a href="javascript:void(0)" onclick="checkLink('${(g.link1688 || '').replace(/'/g, "\\'")}')">1688</a>
+                            <a href="${g.link}" target="_blank">原品</a>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }).join('');
 
-            } catch (e) {
-                loading.style.display = 'none';
-                error.style.display = 'block';
-                errorText.textContent = '加载 data-new.csv 失败：' + e.message + '。请确认文件存在。';
-                console.error(e);
+        // 分页
+        const totalPages = Math.ceil(filteredGroup.length / pageSize) || 1;
+        document.getElementById('pagination').innerHTML = `
+            <button onclick="changePage(-1)" ${page <= 1 ? 'disabled' : ''}>◀ 上一页</button>
+            <span class="page-info">${page} / ${totalPages}</span>
+            <button onclick="changePage(1)" ${page >= totalPages ? 'disabled' : ''}>下一页 ▶</button>
+            <input type="number" id="jumpInput" min="1" max="${totalPages}" placeholder="页码">
+            <button onclick="jumpPage()">跳转</button>
+        `;
+    }
+
+    // ============================================================
+    //  辅助函数
+    // ============================================================
+
+    function changePage(delta) { renderPage(currentPage + delta); }
+    function jumpPage() {
+        const p = parseInt(document.getElementById('jumpInput').value);
+        const total = Math.ceil(filteredGroup.length / pageSize);
+        if (p >= 1 && p <= total) renderPage(p);
+    }
+
+    function copyInvite(text) {
+        if (!text) { showToast('⚠️ 无邀请ID'); return; }
+        navigator.clipboard.writeText(text).then(() => showToast('✅ 已复制: ' + text)).catch(() => {
+            // fallback
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            ta.remove();
+            showToast('✅ 已复制: ' + text);
+        });
+    }
+
+    function showImage(url) {
+        if (!url) return;
+        document.getElementById('modalImg').src = url;
+        document.getElementById('imageModal').style.display = 'flex';
+    }
+
+    function checkLink(rawUrl) {
+        if (!rawUrl) { showToast('❌ 无1688链接'); return; }
+        const match = rawUrl.match(/https?:\/\/[^\s]+/);
+        if (match) window.open(match[0], '_blank');
+        else showToast('❌ 无法识别的链接');
+    }
+
+    let toastTimer;
+
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    // ============================================================
+    //  筛选器初始化
+    // ============================================================
+
+    function initFilters() {
+        const l1Set = new Set(),
+            dateSet = new Set();
+        groupedProducts.forEach(g => {
+            if (g.l1) l1Set.add(g.l1);
+            if (g.date) dateSet.add(g.date);
+        });
+        const l1Sel = document.getElementById('l1Filter');
+        l1Sel.innerHTML = '<option value="">一级类目(全部)</option>' + [...l1Set].sort().map(v => `<option value="${v}">${v}</option>`).join('');
+        const dSel = document.getElementById('dateFilter');
+        dSel.innerHTML = '<option value="">发布日期(全部)</option>' + [...dateSet].sort().map(v => `<option value="${v}">${v}</option>`).join('');
+        updateL2();
+    }
+
+    function updateL2() {
+        const l1 = document.getElementById('l1Filter').value;
+        const l2Set = new Set();
+        groupedProducts.forEach(g => { if (!l1 || g.l1 === l1) { if (g.l2) l2Set.add(g.l2); } });
+        const l2Sel = document.getElementById('l2Filter');
+        l2Sel.innerHTML = '<option value="">二级类目(全部)</option>' + [...l2Set].sort().map(v => `<option value="${v}">${v}</option>`).join('');
+        updateL3();
+    }
+
+    function updateL3() {
+        const l1 = document.getElementById('l1Filter').value;
+        const l2 = document.getElementById('l2Filter').value;
+        const l3Set = new Set();
+        groupedProducts.forEach(g => {
+            if ((!l1 || g.l1 === l1) && (!l2 || g.l2 === l2)) {
+                if (g.l3) l3Set.add(g.l3);
             }
-        }
+        });
+        const l3Sel = document.getElementById('l3Filter');
+        l3Sel.innerHTML = '<option value="">三级类目(全部)</option>' + [...l3Set].sort().map(v => `<option value="${v}">${v}</option>`).join('');
+    }
 
-        // ============================================================
-        //  2. 按 itemid 分组
-        // ============================================================
+    let timer;
 
-        function groupByItem() {
-            const map = new Map();
-            allData.forEach(item => {
-                const id = item.itemid || 'unknown';
-                if (!map.has(id)) {
-                    map.set(id, {
-                        itemid: id,
-                        title: item.title || '',
-                        l1: item.l1 || '',
-                        l2: item.l2 || '',
-                        l3: item.l3 || '',
-                        priceJudge: item.priceJudge || '',
-                        updateDate: item.updateDate || '',
-                        inviteId: item.inviteId || '',
-                        final1688: item.final_1688_link || '',
-                        variants: [],
-                        imgUrls: []
-                    });
-                }
-                const group = map.get(id);
-                // 去重添加 variant
-                const existing = group.variants.find(v => v.modelId === item.modelId);
-                if (!existing) {
-                    group.variants.push({
-                        variant: item.variant || '默认',
-                        price: item.price || '0',
-                        modelId: item.modelId || '',
-                        imgUrl: item.imgUrl || '',
-                        link: item.link || ''
-                    });
-                }
-                if (item.imgUrl && !group.imgUrls.includes(item.imgUrl)) {
-                    group.imgUrls.push(item.imgUrl);
-                }
-                // 标题取第一个非空的
-                if (item.title && !group.title) group.title = item.title;
-                if (item.priceJudge && !group.priceJudge) group.priceJudge = item.priceJudge;
-                if (item.inviteId && !group.inviteId) group.inviteId = item.inviteId;
-                if (item.final_1688_link && !group.final1688) group.final1688 = item.final_1688_link;
-                if (item.updateDate && !group.updateDate) group.updateDate = item.updateDate;
-                if (item.l1 && !group.l1) group.l1 = item.l1;
-                if (item.l2 && !group.l2) group.l2 = item.l2;
-                if (item.l3 && !group.l3) group.l3 = item.l3;
-            });
-            groupedData = Array.from(map.values());
+    function debouncedFilter() {
+        clearTimeout(timer);
+        timer = setTimeout(applyFilters, 300);
+    }
 
-            // 计算每个商品的价格区间
-            groupedData.forEach(g => {
-                const prices = g.variants.map(v => parseFloat(v.price)).filter(p => !isNaN(p));
-                if (prices.length) {
-                    g.minPrice = Math.min(...prices);
-                    g.maxPrice = Math.max(...prices);
-                    g.priceDisplay = prices.length === 1 ?
-                        '¥' + prices[0].toFixed(2) :
-                        '¥' + g.minPrice.toFixed(2) + ' - ¥' + g.maxPrice.toFixed(2);
-                } else {
-                    g.minPrice = null;
-                    g.maxPrice = null;
-                    g.priceDisplay = '-';
-                }
-                g.variantCount = g.variants.length;
-            });
-        }
+    // ============================================================
+    //  启动
+    // ============================================================
 
-        // ============================================================
-        //  3. 工具函数
-        // ============================================================
-
-        function safeStr(v) { return (v || '').trim(); }
-
-        function getUnique(arr, key) {
-            const vals = arr.map(item => safeStr(item[key])).filter(v => v !== '');
-            return [...new Set(vals)].sort();
-        }
-
-        // ============================================================
-        //  4. 渲染筛选器
-        // ============================================================
-
-        function renderFilters() {
-            const l1Sel = document.getElementById('filterL1');
-            const l2Sel = document.getElementById('filterL2');
-            const l3Sel = document.getElementById('filterL3');
-
-            const l1s = getUnique(groupedData, 'l1');
-            const l2s = getUnique(groupedData, 'l2');
-            const l3s = getUnique(groupedData, 'l3');
-
-            l1Sel.innerHTML = '<option value="all">全部</option>' + l1s.map(v => `<option value="${v}">${v}</option>`).join('');
-            l2Sel.innerHTML = '<option value="all">全部</option>' + l2s.map(v => `<option value="${v}">${v}</option>`).join('');
-            l3Sel.innerHTML = '<option value="all">全部</option>' + l3s.map(v => `<option value="${v}">${v}</option>`).join('');
-        }
-
-        // ============================================================
-        //  5. 筛选 & 排序
-        // ============================================================
-
-        function applyFilters() {
-            const l1 = document.getElementById('filterL1').value;
-            const l2 = document.getElementById('filterL2').value;
-            const l3 = document.getElementById('filterL3').value;
-            const priceJudge = document.getElementById('filterPriceJudge').value;
-            const search = document.getElementById('searchInput').value.toLowerCase().trim();
-            const priceMin = parseFloat(document.getElementById('priceMin').value) || 0;
-            const priceMax = parseFloat(document.getElementById('priceMax').value) || Infinity;
-            const dateFilter = document.getElementById('filterDate').value;
-            const sort = document.getElementById('sortSelect').value;
-
-            filteredData = groupedData.filter(group => {
-                if (l1 !== 'all' && safeStr(group.l1) !== l1) return false;
-                if (l2 !== 'all' && safeStr(group.l2) !== l2) return false;
-                if (l3 !== 'all' && safeStr(group.l3) !== l3) return false;
-                if (priceJudge !== 'all' && safeStr(group.priceJudge) !== priceJudge) return false;
-                if (search) {
-                    const title = safeStr(group.title).toLowerCase();
-                    const id = safeStr(group.itemid
+    window.onload = loadData;
+</script>
+</body>
+</html>
